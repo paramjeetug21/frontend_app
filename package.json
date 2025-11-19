@@ -10,8 +10,24 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tailwindcss/typography": "^0.5.19",
+    "@tiptap/extension-bold": "^3.10.7",
+    "@tiptap/extension-collaboration": "^3.10.7",
+    "@tiptap/extension-document": "^3.10.7",
+    "@tiptap/extension-heading": "^3.10.7",
+    "@tiptap/extension-image": "^3.10.7",
+    "@tiptap/extension-text": "^3.10.7",
+    "@tiptap/extension-text-style": "^3.10.7",
+    "@tiptap/extension-underline": "^3.10.7",
+    "@tiptap/react": "^3.10.7",
+    "@tiptap/starter-kit": "^3.10.7",
+    "axios": "^1.13.2",
     "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "react-dom": "^19.2.0",
+    "react-router-dom": "^7.9.6",
+    "socket.io-client": "^4.8.1",
+    "y-protocols": "^1.0.6",
+    "yjs": "^13.6.27"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",

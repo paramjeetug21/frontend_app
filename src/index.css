@@ -1,1 +1,80 @@
 @import "tailwindcss";
+/* index.css */
+
+body,
+
+/* index.css */
+:root {
+  --chocolate-light: #d2691e33; /* light chocolate with 20% opacity */
+}
+
+/* optional Tailwind utility */
+.bg-chocolate-100 {
+  background-color: var(--chocolate-light);
+}
+
+.prose h1 {
+  @apply text-3xl font-bold mt-4 mb-2;
+}
+
+.prose h2 {
+  @apply text-2xl font-semibold mt-4 mb-2;
+}
+
+.prose ul {
+  @apply list-disc pl-6 mb-2;
+}
+
+.prose ol {
+  @apply list-decimal pl-6 mb-2;
+}
+
+.prose li {
+  @apply mb-1;
+}
+
+/* TipTap Editor Content Styling */
+.editor-content {
+  @apply text-gray-800 leading-relaxed font-sans;
+}
+
+.editor-content h1 {
+  @apply text-2xl font-bold mt-6 mb-2;
+}
+
+.editor-content h2 {
+  @apply text-xl font-semibold mt-5 mb-2;
+}
+
+.editor-content p {
+  @apply mb-4;
+}
+
+.editor-content ul {
+  @apply list-disc pl-6 mb-4;
+}
+
+.editor-content ol {
+  @apply list-decimal pl-6 mb-4;
+}
+
+.editor-content li {
+  @apply mb-2;
+}
+/* TipTap Editor Content Styling */
+.editor-content {
+  @apply text-gray-800 leading-relaxed font-sans p-2 rounded;
+  border: 2px dashed rgba(0, 0, 0, 0.1); /* very thin subtle dashed border */
+}
+
+/* On focus, make the dashed border more visible */
+.editor-content:focus-within {
+  border-color: rgba(149, 210, 236, 0.3);
+}
+
+.ProseMirror img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 10px 0;
+}
