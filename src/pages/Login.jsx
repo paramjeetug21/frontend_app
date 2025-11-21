@@ -14,10 +14,13 @@ export const Login = () => {
     setMessage("Logging in...");
 
     try {
-      const { data } = await axios.post("http://localhost:3000/auth/login", {
-        email,
-        password,
-      });
+      const { data } = await axios.post(
+        "https://backend-app-chi-ten.vercel.app/auth/login",
+        {
+          email,
+          password,
+        }
+      );
       console.log(data);
 
       // Save token
