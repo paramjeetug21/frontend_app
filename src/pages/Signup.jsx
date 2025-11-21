@@ -22,11 +22,15 @@ export const Signup = () => {
     setMessage("Signing up...");
 
     try {
-      const { data } = await axiosInstance.post("/auth/register", {
-        name,
-        email,
-        password,
-      });
+      const { data } = await axios.post(
+        "https://backend-app-chi-ten.vercel.app/auth/register",
+
+        {
+          name,
+          email,
+          password,
+        }
+      );
 
       // Save user info from backend
       if (data.user) {
