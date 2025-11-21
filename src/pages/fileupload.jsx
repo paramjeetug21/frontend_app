@@ -10,14 +10,17 @@ export default function FileUploader() {
     formData.append("file", file);
 
     const uploadRes = await axios.post(
-      "http://localhost:5000/files/upload",
+      "https://backend-app-chi-ten.vercel.app/files/upload",
       formData
     );
     const key = uploadRes.data.key;
 
-    const urlRes = await axios.get("http://localhost:5000/files/signed-url", {
-      params: { key },
-    });
+    const urlRes = await axios.get(
+      "https://backend-app-chi-ten.vercel.app/files/signed-url",
+      {
+        params: { key },
+      }
+    );
 
     setFileUrl(urlRes.data.url);
   };

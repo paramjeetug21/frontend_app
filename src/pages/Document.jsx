@@ -36,7 +36,7 @@ export const Document = () => {
   const [versions, setVersions] = useState([]);
 
   const [ydoc] = useState(() => new Y.Doc());
-  const [socket] = useState(() => io("http://localhost:3000"));
+  const [socket] = useState(() => io("https://backend-app-chi-ten.vercel.app"));
   const fileInputRef = useRef(null);
   const lastSavedRef = useRef(null);
 
@@ -66,7 +66,7 @@ export const Document = () => {
       try {
         const token = localStorage.getItem("token");
         const res = await axios.get(
-          `http://localhost:3000/documents/${documentId}`,
+          `https://backend-app-chi-ten.vercel.app/documents/${documentId}`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
 
@@ -75,7 +75,7 @@ export const Document = () => {
         } else {
           const initialUpdate = Y.encodeStateAsUpdate(ydoc);
           await axios.patch(
-            `http://localhost:3000/documents/${documentId}`,
+            `https://backend-app-chi-ten.vercel.app/documents/${documentId}`,
             { content: Array.from(initialUpdate) },
             { headers: { Authorization: `Bearer ${token}` } }
           );
@@ -167,13 +167,16 @@ export const Document = () => {
       const form = new FormData();
       form.append("file", file);
       const uploadRes = await axios.post(
-        "http://localhost:3000/files/upload",
+        "https://backend-app-chi-ten.vercel.app/files/upload",
         form
       );
       const key = uploadRes.data.key;
-      const urlRes = await axios.get("http://localhost:3000/files/signed-url", {
-        params: { key },
-      });
+      const urlRes = await axios.get(
+        "https://backend-app-chi-ten.vercel.app/files/signed-url",
+        {
+          params: { key },
+        }
+      );
       const imageUrl = urlRes.data.url;
       editor
         ?.chain()

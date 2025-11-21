@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const API_BASE = "http://localhost:3000/workspace-users";
+const API_BASE = "https://backend-app-chi-ten.vercel.app/workspace-users";
 
 const NotificationPage = () => {
   const [notifications, setNotifications] = useState([]);

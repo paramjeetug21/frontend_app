@@ -44,7 +44,7 @@ export const Login = () => {
 
   // ---------------- GOOGLE LOGIN ----------------
   const handleGoogleLogin = () => {
-    window.location.href = "http://localhost:3000/auth/google";
+    window.location.href = "https://backend-app-chi-ten.vercel.app/auth/google";
   };
 
   return (

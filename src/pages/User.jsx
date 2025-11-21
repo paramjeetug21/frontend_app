@@ -77,9 +77,12 @@ export const User = () => {
 
     const fetchWorkspaces = async () => {
       try {
-        const res = await axios.get("http://localhost:3000/workspaces", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const res = await axios.get(
+          "https://backend-app-chi-ten.vercel.app/workspaces",
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
         setWorkspaces(res.data);
       } catch (err) {
         console.log("Error fetching workspaces:", err);
@@ -99,7 +102,7 @@ export const User = () => {
 
     try {
       const res = await axios.post(
-        "http://localhost:3000/workspaces",
+        "https://backend-app-chi-ten.vercel.app/workspaces",
         newWorkspace,
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -125,9 +128,12 @@ export const User = () => {
     const token = localStorage.getItem("token");
 
     try {
-      await axios.delete(`http://localhost:3000/workspaces/${workspaceId}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      await axios.delete(
+        `https://backend-app-chi-ten.vercel.app/workspaces/${workspaceId}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
 
       setWorkspaces(workspaces.filter((w) => w.id !== workspaceId));
     } catch (err) {
@@ -147,7 +153,7 @@ export const User = () => {
     console.log(newMember);
     try {
       const res = await axios.post(
-        `http://localhost:3000/workspace-users/add-by-email/${showAddMemberModal}`, // workspaceId
+        `https://backend-app-chi-ten.vercel.app/workspace-users/add-by-email/${showAddMemberModal}`, // workspaceId
         {
           email: newMember.email,
           role: newMember.role,

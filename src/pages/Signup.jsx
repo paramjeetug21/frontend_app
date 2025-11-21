@@ -12,7 +12,7 @@ export const Signup = () => {
 
   // ---------------- AXIOS INSTANCE ----------------
   const axiosInstance = axios.create({
-    baseURL: "http://localhost:3000",
+    baseURL: "https://backend-app-chi-ten.vercel.app",
     headers: { "Content-Type": "application/json" },
   });
 
@@ -56,7 +56,7 @@ export const Signup = () => {
 
   // ---------------- GOOGLE SIGNUP ----------------
   const handleGoogleSignup = () => {
-    window.location.href = "http://localhost:3000/auth/google";
+    window.location.href = "https://backend-app-chi-ten.vercel.app/auth/google";
   };
 
   return (

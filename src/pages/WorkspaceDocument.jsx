@@ -25,7 +25,7 @@ export const WorkspaceDocuments = () => {
 
     try {
       const res = await axios.get(
-        `http://localhost:3000/workspace-users/${workspace.id}`,
+        `https://backend-app-chi-ten.vercel.app/workspace-users/${workspace.id}`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
@@ -49,7 +49,7 @@ export const WorkspaceDocuments = () => {
 
     try {
       const res = await axios.get(
-        `http://localhost:3000/documents?workspaceId=${workspace.id}`,
+        `https://backend-app-chi-ten.vercel.app/documents?workspaceId=${workspace.id}`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setDocuments(res.data);
@@ -73,7 +73,7 @@ export const WorkspaceDocuments = () => {
 
     try {
       const res = await axios.post(
-        `http://localhost:3000/documents/${workspace.id}`,
+        `https://backend-app-chi-ten.vercel.app/documents/${workspace.id}`,
         newDocument,
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -98,9 +98,12 @@ export const WorkspaceDocuments = () => {
   // ------------------------------
   const handleDeleteDocument = async (docId) => {
     try {
-      await axios.delete(`http://localhost:3000/documents/${docId}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      await axios.delete(
+        `https://backend-app-chi-ten.vercel.app/documents/${docId}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       setDocuments(documents.filter((doc) => doc.id !== docId));
       alert("Document deleted successfully");
     } catch (err) {
