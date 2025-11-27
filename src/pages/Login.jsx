@@ -2,13 +2,21 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-export const Login = () => {
+export const AuthPage = () => {
+  const navigate = useNavigate();
+  const [isLogin, setIsLogin] = useState(true); // true = Login, false = Signup
+
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
-  const navigate = useNavigate();
 
-  // ---------------- NORMAL LOGIN ----------------
+  // Google Auth
+  const handleGoogleAuth = () => {
+    window.location.href = "https://backend-app-chi-ten.vercel.app/auth/google";
+  };
+
+  // ---------------- LOGIN ----------------
   const handleLogin = async (e) => {
     e.preventDefault();
     setMessage("Logging in...");
@@ -16,35 +24,42 @@ export const Login = () => {
     try {
       const { data } = await axios.post(
         "https://backend-app-chi-ten.vercel.app/auth/login",
-        {
-          email,
-          password,
-        }
+        { email, password }
       );
-      console.log(data);
 
-      // Save token
       if (data.access_token) localStorage.setItem("token", data.access_token);
-
-      // Save user info
       if (data.user) localStorage.setItem("user", JSON.stringify(data.user));
 
-      setMessage("Login successful!");
-      // Redirect to user page
+      setMessage("Login Successful!");
       navigate("/");
-      console.log(data.access_token);
     } catch (err) {
-      if (err.response && err.response.data?.message) {
-        setMessage(err.response.data.message);
-      } else {
-        setMessage("Server error!");
-      }
+      setMessage(err.response?.data?.message || "Login failed!");
     }
   };
 
-  // ---------------- GOOGLE LOGIN ----------------
-  const handleGoogleLogin = () => {
-    window.location.href = "https://backend-app-chi-ten.vercel.app/auth/google";
+  // ---------------- SIGNUP ----------------
+  const handleSignup = async (e) => {
+    e.preventDefault();
+    setMessage("Signing up...");
+
+    try {
+      const { data } = await axios.post(
+        "https://backend-app-chi-ten.vercel.app/auth/register",
+        { name, email, password }
+      );
+
+      if (data.user) localStorage.setItem("user", JSON.stringify(data.user));
+
+      if (data.user?.workspaces?.length > 0)
+        localStorage.setItem("workspaceId", data.user.workspaces[0].id);
+
+      if (data.token) localStorage.setItem("token", data.token);
+
+      setMessage("Signup Successful!");
+      navigate("/user");
+    } catch (err) {
+      setMessage(err.response?.data?.message || "Signup failed!");
+    }
   };
 
   return (
@@ -58,51 +73,67 @@ export const Login = () => {
 
       <div className="relative z-10 w-full max-w-sm p-8 bg-white/20 backdrop-blur-lg rounded-2xl shadow-2xl border border-white/30">
         <h2 className="text-3xl font-extrabold mb-6 text-center text-white drop-shadow-md">
-          Welcome Back
+          {isLogin ? "Welcome Back" : "Create Account"}
         </h2>
 
-        <form className="space-y-4" onSubmit={handleLogin}>
+        <form
+          className="space-y-4"
+          onSubmit={isLogin ? handleLogin : handleSignup}
+        >
+          {!isLogin && (
+            <input
+              type="text"
+              placeholder="Full Name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="w-full p-3 rounded-xl text-white placeholder-white bg-white/30 border border-white/40"
+            />
+          )}
+
           <input
             type="email"
             placeholder="Email"
-            className="w-full p-3 rounded-xl text-white placeholder-white bg-white/30 border border-white/40"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            className="w-full p-3 rounded-xl text-white placeholder-white bg-white/30 border border-white/40"
           />
 
           <input
             type="password"
             placeholder="Password"
-            className="w-full p-3 rounded-xl text-white placeholder-white bg-white/30 border border-white/40"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            className="w-full p-3 rounded-xl text-white placeholder-white bg-white/30 border border-white/40"
           />
 
           <button
             type="submit"
             className="w-full py-3 rounded-xl font-bold text-white bg-indigo-600"
           >
-            Log In
+            {isLogin ? "Log In" : "Sign Up"}
           </button>
 
-          {/* Google Login */}
           <button
             type="button"
-            onClick={handleGoogleLogin}
+            onClick={handleGoogleAuth}
             className="w-full py-3 rounded-xl font-semibold text-gray-900 bg-white hover:bg-gray-100 transition shadow-md"
           >
-            Log In with Google
+            {isLogin ? "Log In with Google" : "Sign Up with Google"}
           </button>
         </form>
 
+        {/* Toggle Login / Signup */}
         <p className="mt-4 text-center text-white">
-          Don’t have an account?{" "}
-          <a
-            href="/signup"
+          {isLogin ? "Don’t have an account?" : "Already have an account?"}{" "}
+          <button
+            onClick={() => {
+              setIsLogin(!isLogin);
+              setMessage("");
+            }}
             className="text-yellow-300 font-semibold hover:underline"
           >
-            Sign up
-          </a>
+            {isLogin ? "Sign up" : "Login"}
+          </button>
         </p>
 
         <p className="mt-4 text-center text-white">{message}</p>

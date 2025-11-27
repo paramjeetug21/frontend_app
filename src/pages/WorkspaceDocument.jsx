@@ -128,6 +128,7 @@ export const WorkspaceDocuments = () => {
       <div className="flex items-center justify-between px-8 py-4 bg-white/20 backdrop-blur-md shadow-md">
         <h2 className="text-xl font-bold text-gray-800">
           Workspace: {workspace.name} ({role})
+          <p>Description: {workspace.description}</p>
         </h2>
         <button
           onClick={() => navigate(-1)}

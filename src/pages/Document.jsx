@@ -13,8 +13,11 @@ import {
   rollbackVersion,
   getVersions,
 } from "../services/documentService";
+import { useNavigate } from "react-router-dom";
 
+// Inside your component
 export const Document = () => {
+  const navigate = useNavigate();
   const { id } = useParams();
   const documentId = id;
   const location = useLocation();
@@ -36,7 +39,9 @@ export const Document = () => {
   const [versions, setVersions] = useState([]);
 
   const [ydoc] = useState(() => new Y.Doc());
-  const [socket] = useState(() => io("https://backend-app-chi-ten.vercel.app"));
+  const [socket] = useState(() =>
+    io("https://backend-app-chi-ten.vercel.app/")
+  );
   const fileInputRef = useRef(null);
   const lastSavedRef = useRef(null);
 
@@ -163,20 +168,27 @@ export const Document = () => {
   const handleFileSelect = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
+    e.target.value = "";
     try {
+      const token = localStorage.getItem("token");
       const form = new FormData();
       form.append("file", file);
+
       const uploadRes = await axios.post(
         "https://backend-app-chi-ten.vercel.app/files/upload",
-        form
+        form,
+        { headers: { Authorization: `Bearer ${token}` } }
       );
+
       const key = uploadRes.data.key;
       const urlRes = await axios.get(
         "https://backend-app-chi-ten.vercel.app/files/signed-url",
         {
+          headers: { Authorization: `Bearer ${token}` },
           params: { key },
         }
       );
+
       const imageUrl = urlRes.data.url;
       editor
         ?.chain()
@@ -184,7 +196,7 @@ export const Document = () => {
         ?.setImage({ src: imageUrl, width: "300px", height: "auto" })
         ?.run();
     } catch (err) {
-      console.error(err);
+      console.error(err.response || err);
       alert("Image upload failed.");
     }
   };
@@ -219,21 +231,23 @@ export const Document = () => {
               ? new Date(documentData.updatedAt).toLocaleString()
               : "N/A"}
           </p>
-          <p className="text-sm text-gray-800">
-            Created By: {documentData.creator?.name || "Unknown"}
-          </p>
-          <p className="text-sm text-gray-800">
-            Updated By: {documentData.updater?.name || "Unknown"}
-          </p>
         </div>
-        {role.toLowerCase() !== "viewer" && (
+        <div>
+          {role.toLowerCase() !== "viewer" && (
+            <button
+              onClick={handleSaveVersion}
+              className="px-4 py-2 m-2 bg-green-400  rounded-xl font-bold transition hover:bg-green-500 hover:cursor-pointer"
+            >
+              Save
+            </button>
+          )}
           <button
-            onClick={handleSaveVersion}
-            className="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-xl font-bold transition"
+            onClick={() => navigate(-1)}
+            className="px-4 py-2 bg-gray-400 hover:bg-gray-500 text-gray-800 rounded-lg font-bold"
           >
-            Save
-          </button>
-        )}
+            ← Back
+          </button>{" "}
+        </div>
       </div>
 
       {/* Toolbar */}

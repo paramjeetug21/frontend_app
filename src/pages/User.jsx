@@ -99,7 +99,7 @@ export const User = () => {
     if (!newWorkspace.name) return;
 
     const token = localStorage.getItem("token");
-
+    console.log("newWorkspace == ", newWorkspace);
     try {
       const res = await axios.post(
         "https://backend-app-chi-ten.vercel.app/workspaces",
@@ -180,7 +180,7 @@ export const User = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     localStorage.removeItem("workspaceId");
-    navigate("/login");
+    navigate("/auth");
   };
 
   if (loading)
@@ -275,7 +275,7 @@ export const User = () => {
               <h4 className="text-xl font-bold mb-2 text-gray-900">
                 {ws.name}
               </h4>
-              <p className="text-gray-700 text-sm">
+              <p className="text-gray-700 text-sm line-clamp-3 overflow-auto max-h-16 hide-scrollbar">
                 {ws.description || "No description"}
               </p>
             </div>

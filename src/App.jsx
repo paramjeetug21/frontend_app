@@ -4,13 +4,12 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
-import { Login } from "./pages/Login";
-import { Signup } from "./pages/Signup";
 import { User } from "./pages/User";
 import { Analytics } from "./pages/Analytics";
 import { Document } from "./pages/Document";
 import { WorkspaceDocuments } from "./pages/WorkspaceDocument";
 import NotificationPage from "./pages/notification";
+import { AuthPage } from "./pages/Login";
 
 function App() {
   return (
@@ -18,8 +17,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Navigate to="/user" />} />
 
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
+        <Route path="/auth" element={<AuthPage />} />
 
         <Route path="/user" element={<User />} />
         <Route path="/analytics" element={<Analytics />} />
