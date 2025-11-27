@@ -69,7 +69,7 @@ export const User = () => {
     const savedUser = localStorage.getItem("user");
 
     if (!token || !savedUser) {
-      navigate("/login");
+      navigate("/auth");
       return;
     }
 
